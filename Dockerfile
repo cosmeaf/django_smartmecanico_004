@@ -34,4 +34,4 @@ COPY . /app
 
 EXPOSE 443
 
-CMD ["gunicorn", "--workers", "2", "smartMecanico.wsgi", "-b", "0.0.0.0:443", "--certfile", "fullchain.pem", "--keyfile", "privkey.pem", "--log-level", "debug"]
+CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:443", "--certfile", "fullchain.pem", "--keyfile", "privkey.pem", "--log-level", "debug"]
