@@ -14,10 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hln2dxofcw@yu(z!z7=b&*vtc9sscai63@0lxq7*)&1)xm&$!4'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -166,9 +166,6 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 TWILIO_ACCOUNT_SID = os.environ['TWILIO_ACCOUNT_SID']
 TWILIO_AUTH_TOKEN = os.environ['TWILIO_AUTH_TOKEN']
 TWILIO_PHONE_NUMBER = os.environ['TWILIO_PHONE_NUMBER']
-# TWILIO_ACCOUNT_SID='ACaa414382fcc832909d3b10b53611db09'
-# TWILIO_AUTH_TOKEN='9384fb6d81f2b36f9a6242d9f1c8715a'
-# TWILIO_PHONE_NUMBER='+15855316933'
 
 
 # REMOVE / ENDPOINT
