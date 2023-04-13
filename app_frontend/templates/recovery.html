@@ -1,0 +1,37 @@
+<!-- templates/login.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="sign-up py-5">
+    <div class="title">
+        <p>Recupere sua senha</p>
+    </div>
+
+    <div class="register-column container d-flex justify-content-between ">
+        <div class="row">
+            <div class="col">
+                <img src="{% static 'assets/images/image-007.png' %}" alt="Carro sendo reparado por um mecânico"
+                class="img-fluid rounded" style="width: 100%; height: auto; max-width: 100%;">
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="email">Entre com seu e-mail</label>
+                                <input type="email" class="form-control form-control-sm" id="email">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-sm">Recuperar</button>
+                            <div class="mt-3 d-flex justify-content-between">
+                                <a href="{% url 'register' %}">Registrar-se?</a>
+                                <a href="{% url 'login' %}">Já tenho Registro</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

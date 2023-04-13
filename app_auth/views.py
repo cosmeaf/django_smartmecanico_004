@@ -7,7 +7,11 @@ from .serializers import *
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_str, force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.http import JsonResponse
 
+def api_status(request):
+    return JsonResponse({'message': 'API Online'})
+    
 # RESET PASSWORD VIEW
 class ResetPasswordConfirmView(GenericAPIView):
     permission_classes = [AllowAny]

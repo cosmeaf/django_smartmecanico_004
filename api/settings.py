@@ -17,20 +17,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 
-CORS_REPLACE_HTTPS_REFERER      = True
-HOST_SCHEME                     = "https://"
-SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT             = True
-SESSION_COOKIE_SECURE           = True
-CSRF_COOKIE_SECURE              = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
-SECURE_HSTS_SECONDS             = 31536000
-SECURE_FRAME_DENY               = True
+# CORS_REPLACE_HTTPS_REFERER      = True
+# HOST_SCHEME                     = "https://"
+# SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT             = True
+# SESSION_COOKIE_SECURE           = True
+# CSRF_COOKIE_SECURE              = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
+# SECURE_HSTS_SECONDS             = 31536000
+# SECURE_FRAME_DENY               = True
 
 # Application definition
 
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'app_schedule',
     'app_employees',
     'app_history',
+    'app_frontend',
 ]
 
 
@@ -65,7 +66,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',    
     'django.contrib.auth.middleware.AuthenticationMiddleware',    
     'django.contrib.messages.middleware.MessageMiddleware',    
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',    
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'app_frontend.middleware.JWTMiddleware',
 ]
 
 
@@ -139,6 +141,7 @@ USE_TZ = True
 
 if DEBUG:
     STATIC_URL = '/static/'
+    STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -153,6 +156,10 @@ else:
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'app_auth.authentication.Email_OR_Username',
+]
 
 # Service SMTO E-mail
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
