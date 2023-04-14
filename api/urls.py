@@ -6,7 +6,9 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
-)
+    TokenVerifyView,
+) 
+
 
 # IMPORT APPLICATIONS VIEW
 from app_address.views import AddressViewSet
@@ -17,7 +19,8 @@ from app_schedule.views import ScheduleViewSet
 from app_history.views import ScheduledServiceViewSet
 
 # ROUTERs
-router = routers.SimpleRouter(trailing_slash=False)
+#router = routers.SimpleRouter(trailing_slash=False)
+router = routers.SimpleRouter()
 router.register(r'address', AddressViewSet)
 router.register(r'profile', UserAndProfileViewSet)
 router.register(r'vehicle', VehicleModelViewSet)
@@ -29,12 +32,12 @@ router.register(r'scheduled-services', ScheduledServiceViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/', include('app_auth.urls')),
     path('api/v1/', include(router.urls)),
     # FrontEnd Web
-    path('', include('app_frontend.urls')),
+    path('api/v1/', include('app_frontend.urls')),
 ]
 
 if settings.DEBUG:

@@ -67,7 +67,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',    
     'django.contrib.messages.middleware.MessageMiddleware',    
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'app_frontend.middleware.JWTMiddleware',
 ]
 
 
@@ -176,8 +175,8 @@ TWILIO_PHONE_NUMBER = os.environ['TWILIO_PHONE_NUMBER']
 
 
 # REMOVE / ENDPOINT
-TRAILING_SLASH = False
-APPEND_SLASH = False
+# TRAILING_SLASH = False
+# APPEND_SLASH = False
 
 # Log
 LOGGING = {
@@ -234,3 +233,8 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'app_auth.utils.custom_exception_handler',
     'MAX_UPLOAD_SIZE': 1024 * 1024 * 10, # aumenta o limite de 2.5 MB para 10 MB (opcional)
 }
+
+# API CLIENT
+API_BASE_URL = os.getenv('API_BASE_URL')
+API_AUTH_ENDPOINT = os.getenv('API_AUTH_ENDPOINT')
+
