@@ -32,6 +32,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 # copy project
 COPY . /app
 
-EXPOSE 443
+EXPOSE 8000
 
-CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:443", "--certfile", "fullchain.pem", "--keyfile", "privkey.pem", "--log-level", "debug"]
+CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:8000", "--certfile", "fullchain.pem", "--keyfile", "privkey.pem", "--log-level", "debug"]
