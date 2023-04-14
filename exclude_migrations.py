@@ -24,7 +24,7 @@ if os.path.exists(db_path):
     os.remove(db_path)
 
 # Executa o script para excluir os migrations
-for app in ['app_address', 'app_auth', 'app_employees', 'app_profile', 'app_schedule', 'app_services', 'app_vehicles']:
+for app in ['app_address', 'app_auth', 'app_employees', 'app_profile', 'app_schedule', 'app_services', 'app_vehicles', 'app_frontend']:
     migrations_dir = os.path.join(os.getcwd(), app, 'migrations')
     print(migrations_dir)
     for file in os.listdir(migrations_dir):
