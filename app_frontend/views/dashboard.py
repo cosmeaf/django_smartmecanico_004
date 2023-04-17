@@ -2,7 +2,7 @@ import requests
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from app_frontend.api_client.get_jwt_token import get_authenticated_data
-from api.settings import API_BASE_URL
+from api.settings import API_BASE_URL, API_VERSION
 
 
 class DashboardView(TemplateView):
@@ -16,7 +16,7 @@ class DashboardView(TemplateView):
         if not access_token:
             return redirect('login')
 
-        profile_url = f'{API_BASE_URL}/profile/'  # Atualize para a URL correta do endpoint do perfil.
+        profile_url = f'{API_BASE_URL}/{API_VERSION}/profile/'  # Atualize para a URL correta do endpoint do perfil.
         profile_data = get_authenticated_data(profile_url, access_token)
 
         if profile_data:

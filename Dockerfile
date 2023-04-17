@@ -32,8 +32,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 # copy project
 COPY . /app
 COPY .env /app/
-COPY exclude_migrations.py /app/
 
 EXPOSE 8000
 
-CMD ["python", "exclude_migrations.py", "gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:8000",  "--log-level", "debug"]
+CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:8000",  "--log-level", "debug"]

@@ -1,11 +1,9 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from app_frontend.api_client.get_jwt_token import get_jwt_token
+from app_frontend.api_client.api_config import ApiConfig
 from django.contrib.auth import logout
-from api.settings import API_BASE_URL
 
-# Authentication Section
 class LoginView(TemplateView):
     template_name = 'login.html'
 
@@ -16,8 +14,8 @@ class LoginView(TemplateView):
 
         if user is not None:
             # Obtenha o token JWT do projeto Django com simple-jwt.
-            jwt_url = f'{API_BASE_URL}/token/'  # Substitua pelo URL real do endpoint de autenticação JWT.
-            access_token = get_jwt_token(username, password, jwt_url)
+            api_config = ApiConfig()
+            access_token = api_config.get_jwt_token(username, password)
 
             if access_token:
                 request.session['access_token'] = access_token
@@ -29,6 +27,8 @@ class LoginView(TemplateView):
         else:
             # Erro na autenticação.
             return render(request, self.template_name, {'error_message': 'Nome de usuário ou senha incorretos.'})
+
+
 
 class RegisterView(TemplateView):
     template_name = "register.html"

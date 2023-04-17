@@ -3,6 +3,7 @@ from pathlib import Path
 import datetime
 from dotenv import load_dotenv
 from django.conf import settings
+import socket
 
 load_dotenv()
 
@@ -19,7 +20,19 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
+# Obtém o endereço IP do sistema
+hostname = socket.gethostname()
+ip_address = socket.gethostbyname(hostname)
+
+# Obtém os endereços permitidos definidos no arquivo .env
+allowed_hosts = os.getenv('ALLOWED_HOSTS', '').split(',')
+
+# Adiciona o endereço IP do sistema à lista de endereços permitidos
+if ip_address not in allowed_hosts:
+    allowed_hosts.append(ip_address)
+
+ALLOWED_HOSTS = allowed_hosts
 
 
 # CORS_REPLACE_HTTPS_REFERER      = True
@@ -234,6 +247,9 @@ REST_FRAMEWORK = {
     'MAX_UPLOAD_SIZE': 1024 * 1024 * 10, # aumenta o limite de 2.5 MB para 10 MB (opcional)
 }
 
-# API CLIENT
-API_BASE_URL = os.getenv('API_BASE_URL')
+# Obtenha o endereço IP do sistema automaticamente.
+API_VERSION = os.getenv('API_VERSION')
+API_TOKEN = os.getenv('API_TOKEN')
+API_BASE_URL = os.getenv('API_BASE_URL', f'http://{socket.gethostbyname(hostname)}/')
+
 

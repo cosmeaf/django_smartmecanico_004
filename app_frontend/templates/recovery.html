@@ -16,14 +16,15 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <form>
+                        <form method="POST" action="{% url 'recovery' %}">
+                            {% csrf_token %}
                             <div class="form-group">
                                 <label for="email">Entre com seu e-mail</label>
                                 <input type="email" class="form-control form-control-sm" id="email">
                             </div>
                             <button type="submit" class="btn btn-success btn-sm">Recuperar</button>
                             <div class="mt-3 d-flex justify-content-between">
-                                <a href="{% url 'register' %}">Registrar-se?</a>
+                                <a href="{% url 'signup' %}">Registrar-se?</a>
                                 <a href="{% url 'login' %}">Já tenho Registro</a>
                             </div>
                         </form>
