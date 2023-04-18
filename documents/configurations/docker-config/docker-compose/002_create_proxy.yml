@@ -1,0 +1,64 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: traefik:v2.9
+    container_name: traefik
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik_vol:/data
+      - ./traefik.toml:/traefik.toml:ro
+      - ./acme.json:/acme.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMINIO}`)"
+      - "traefik.http.routers.traefik.entrypoints=https"
+      - "traefik.http.routers.traefik.tls.certresolver=http"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+    networks:
+      - proxy_net
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.https.address=:443"
+      - "--certificatesresolvers.http.acme.email=${EMAIL}"
+      - "--certificatesresolvers.http.acme.storage=/acme.json"
+      - "--certificatesresolvers.http.acme.httpchallenge=true"
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - "9443:9443"
+      - "8000:8000"
+    command: -H unix:///var/run/docker.sock --sslcert /certs/live/${DOMINIO}/fullchain.pem --sslkey /certs/live/${DOMINIO}/privkey.pem
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_vol:/data
+      - /etc/letsencrypt/live/${DOMINIO}:/certs/live/${DOMINIO}:ro
+      - /etc/letsencrypt/archive/${DOMINIO}:/certs/archive/${DOMINIO}:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.${DOMINIO}`)"
+      - "traefik.http.routers.portainer.entrypoints=https"
+      - "traefik.http.routers.portainer.tls.certresolver=http"
+      - "traefik.http.routers.portainer.service=portainer"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+    networks:
+      - proxy_net
+    hostname: portainer
+    restart: always
+
+volumes:
+  traefik_vol:
+  portainer_vol:
+    external: true
+
+networks:
+  proxy_net:
+    external: true

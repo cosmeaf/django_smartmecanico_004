@@ -1,0 +1,61 @@
+sudo apt-get update
+sudo apt-get install docker.io
+echo 'export PATH=$PATH:/usr/bin/docker' >> ~/.bashrc
+
+
+sudo git clone https://github.com/docker/docker-bench-security.git
+cd docker-bench-security
+sudo sh docker-bench-security.sh
+
+
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get remove --purge nginx nginx-core nginx-full nginx-light nginx-extras -y
+sudo apt-get autoremove -y
+sudo apt-get autoclean -y
+
+sudo apt-get update -y
+sudo apt-get install nginx -y 
+
+#
+sudo apt update && sudo apt upgrade
+sudo apt-get install ca-certificates
+sudo update-ca-certificates
+
+#
+sudo apt install ufw -y
+sudo ufw allow http
+sudo ufw allow https
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d dockersky.com -d www.dockersky.com
+sudo nginx -t
+sudo systemctl restart nginx
+
+#
+sudo apt-get remove nginx
+sudo systemctl stop nginx
+sudo systemctl disable nginx
+
+#
+sudo systemctl stop apache2
+sudo systemctl disable apache2
+sudo netstat -tlnp
+sudo killall apache2
+sudo lsof -i :80,443
+
+# Atualize o sistema e instale o Docker e o Docker Compose
+sudo apt update && sudo apt upgrade -y
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt update
+sudo apt install docker-ce -y
+sudo apt install docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker ${USER}
+sudo usermod -aG docker cosmeaf
+
+# Para instalar o Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose

@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: traefik:v2.4
+    container_name: traefik
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.http.address=:80"
+      - "--entrypoints.https.address=:443"
+      - "--certificatesresolvers.http.acme.email=${EMAIL}"
+      - "--certificatesresolvers.http.acme.storage=/acme.json"
+      - "--certificatesresolvers.http.acme.httpchallenge=true"
+      - "--certificatesresolvers.http.acme.httpchallenge.entrypoint=http"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik_data:/data
+      - ./traefik.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    networks:
+      - proxy_net
+
+volumes:
+  traefik_data:
+    external: true
+
+networks:
+  proxy_net:
+    external: true
