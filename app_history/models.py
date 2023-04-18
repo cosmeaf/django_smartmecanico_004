@@ -31,6 +31,7 @@ def get_video_path(instance, filename):
 
 class ScheduledService(Base):
     STATUS_CHOICES = [
+        ('', '----------------'),
         ('pending', 'Pendente'),
         ('started', 'Iniciado'),
         ('ongoing', 'Em andamento'),
@@ -47,16 +48,20 @@ class ScheduledService(Base):
     service_time = models.DurationField(null=True, blank=True)
     start_time = models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
+    protocol = models.CharField(max_length=50, unique=True)
+    additional_info = models.TextField(null=True, blank=True)
+    problem_found = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Histórico de Agendamento'
+        verbose_name_plural = 'Histórico de Agendamentos'
 
     def save(self, *args, **kwargs):
         if self.service_status == 'pending':
             self.end_time = None
+        if not self.protocol:
+            self.protocol = self.schedule.protocol
         super(ScheduledService, self).save(*args, **kwargs)
 
-
-    class Meta:
-        verbose_name = 'Serviço agendado'
-        verbose_name_plural = 'Serviços agendados'
-
     def __str__(self):
-        return f'Serviço agendado em {self.schedule.date} para o usuário {self.schedule.user} com status {self.service_status}'
+        return f'Serviço agendado em {self.schedule.day} para o usuário {self.schedule.user} com status {self.service_status}'

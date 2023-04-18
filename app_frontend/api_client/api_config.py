@@ -20,13 +20,14 @@ class ApiConfig:
             return response.json()['access']
         return None
 
-    def get_authenticated_data(self, url, token):
+    @staticmethod
+    def get_authenticated_data(url, token):
         headers = {'Authorization': f'Bearer {token}'}
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             try:
                 data = response.json()
-                return data[0] if data else None
+                return data
             except ValueError:
                 return None
         return None

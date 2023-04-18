@@ -4,6 +4,7 @@ from app_schedule.models import Schedule
 
 class ScheduleSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    employee = serializers.StringRelatedField()
 
     class Meta:
         model = Schedule
@@ -18,6 +19,8 @@ class ScheduleSerializer(serializers.ModelSerializer):
             'vehicle': instance.vehicle.brand,
             'hour': instance.hour,
             'day': instance.day.strftime('%d/%m/%Y'),
+            'protocol': instance.protocol,
+            'employee': instance.employee.user.username if instance.employee else None
         }
 
 
@@ -26,7 +29,8 @@ class ScheduleDetailSerializer(serializers.ModelSerializer):
     address = serializers.StringRelatedField(source='address.cep')
     service = serializers.StringRelatedField(source='service.name')
     vehicle = serializers.StringRelatedField(source='vehicle.brand')
+    employee = serializers.StringRelatedField()
 
     class Meta:
         model = Schedule
-        fields = ['id', 'user', 'address', 'service', 'vehicle', 'hour', 'day']
+        fields = ['id', 'user', 'address', 'service', 'vehicle', 'hour', 'day', 'protocol', 'employee']

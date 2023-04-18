@@ -8,26 +8,14 @@ class LoginView(TemplateView):
     template_name = 'login.html'
 
     def post(self, request, *args, **kwargs):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
         if user is not None:
-            # Obtenha o token JWT do projeto Django com simple-jwt.
-            api_config = ApiConfig()
-            access_token = api_config.get_jwt_token(username, password)
-
-            if access_token:
-                request.session['access_token'] = access_token
-                login(request, user)
-                return redirect('dashboard')
-            else:
-                # Erro ao obter o token JWT.
-                return render(request, self.template_name, {'error_message': 'Erro ao obter o token JWT.'})
+            login(request, user)
+            return redirect('dashboard')
         else:
-            # Erro na autenticação.
-            return render(request, self.template_name, {'error_message': 'Nome de usuário ou senha incorretos.'})
-
+            return redirect('login')
 
 
 class RegisterView(TemplateView):
@@ -37,10 +25,8 @@ class RecoveryView(TemplateView):
     template_name = "recovery.html"
 
 def logout_view(request):
-    if request.user.is_authenticated:
-        if 'access_token' in request.session:
-            del request.session['access_token']
-        logout(request)
+    if 'access_token' in request.session:
+        del request.session['access_token']
     return redirect('login')
 
 # Home Page
