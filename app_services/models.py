@@ -28,8 +28,8 @@ class Service(Base):
     description = models.TextField('Descrição', editable=True)
 
     class Meta:
-        verbose_name = 'Service'
-        verbose_name_plural = 'Services'
+        verbose_name = 'Serviço'
+        verbose_name_plural = 'Serviços'
 
     def __str__(self):
         return f'{self.name}'
@@ -56,8 +56,8 @@ class HourService(Base):
     hour = models.CharField('Hora Serviço', max_length=8)
 
     class Meta:
-        verbose_name = 'Hour Service'
-        verbose_name_plural = 'Hour Services'
+        verbose_name = 'Horário de Atendimento'
+        verbose_name_plural = 'Horário de Atendimento'
 
     def __str__(self):
         return f'{self.hour}'

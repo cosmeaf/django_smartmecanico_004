@@ -1,33 +1,37 @@
-from django.conf import settings
-import requests, json, socket
+import jwt
+import requests
+from jwt import decode
+from jwt.exceptions import InvalidTokenError, ExpiredSignatureError
+import logging
 
-class ApiConfig:
-    def __init__(self):
-        self.api_base_url = settings.API_BASE_URL
-        self.api_version = settings.API_VERSION
-        self.api_token = settings.API_TOKEN
-        self.ip_address = socket.gethostbyname(socket.gethostname())
+logger = logging.getLogger(__name__)
 
-    def get_api_base_url(self):
-        return self.api_base_url
+class APIClient:
 
-    def get_jwt_token(self, username, password):
-        headers = {'Content-Type': 'application/json'}
-        data = json.dumps({'username': username, 'password': password})
-        jwt_url = f"{self.api_base_url}/{self.api_version}/{self.api_token}/"
-        response = requests.post(jwt_url, data=data, headers=headers)
-        if response.status_code == 200:
-            return response.json()['access']
-        return None
+    def __init__(self, token=None):
+        self.token = token
+        self.headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+        if token:
+            self.headers['Authorization'] = f'Bearer {token}'
 
-    @staticmethod
-    def get_authenticated_data(url, token):
-        headers = {'Authorization': f'Bearer {token}'}
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            try:
-                data = response.json()
-                return data
-            except ValueError:
-                return None
-        return None
+    def _send_request(self, method, url, *args, **kwargs):
+        response = requests.request(method, url, headers=self.headers, *args, **kwargs)
+        return response
+
+    def post(self, url, *args, **kwargs):
+        return self._send_request('POST', url, *args, **kwargs)
+
+    def get(self, url, *args, **kwargs):
+        return self._send_request('GET', url, *args, **kwargs)
+
+    def validate_token(self, secret_key):
+        try:
+            payload = jwt.decode(self.token, secret_key, algorithms=['HS256'])
+            return True
+        except jwt.ExpiredSignatureError:
+            return False
+        except jwt.InvalidTokenError:
+            return False

@@ -25,8 +25,8 @@ class Address(Base):
     uf = models.CharField('Estado', max_length=2,  blank=False, null=False, editable=True)
 
     class Meta:
-        verbose_name = 'Address'
-        verbose_name_plural = 'Addresses'
+        verbose_name = 'Endereço'
+        verbose_name_plural = 'Endereços'
 
     def __str__(self):
         return f'{self.logradouro}, {self.localidade} - {self.uf}'

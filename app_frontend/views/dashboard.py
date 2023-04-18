@@ -1,46 +1,44 @@
-import requests
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseServerError
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from rest_framework_simplejwt.tokens import RefreshToken
-from app_profile.models import Profile
+from django.contrib import messages
+from app_frontend.api_client.api_config import APIClient
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
+
+API_URL = settings.API_BASE_URL
+LOGIN_URL = settings.LOGIN_URL
+SECRET_KEY = settings.SECRET_KEY
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class DashboardView(TemplateView):
     template_name = 'dashboard/index.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get(self, request, *args, **kwargs):
+        token = request.session.get('token')
+        if not token:
+            return redirect('login')
 
-        # Obter o perfil do usuário atual
-        try:
-            profile = self.request.user.profile
-        except Profile.DoesNotExist:
-            profile = None
+        api_client = APIClient(token)
+        is_valid = api_client.validate_token(SECRET_KEY)
+        if not is_valid:
+            messages.error(request, 'Token inválido ou expirado.')
+            return redirect('login')
 
-        # Gerar token de autenticação
-        refresh = RefreshToken.for_user(self.request.user)
-        access_token = str(refresh.access_token)
-
-        # Configurar cabeçalhos da solicitação HTTP com o token de autenticação
-        headers = {'Authorization': f'Bearer {access_token}'}
-
-        # Fazer solicitação GET para o perfil da API
-        profile_url = 'http://10.0.0.10/api/v1/profile/'
-        response = requests.get(profile_url, headers=headers)
-
-        # Testar se a resposta da API é bem-sucedida
+        response = api_client.get(API_URL + '/profile/')
         if response.status_code == 200:
-            profile_data = response.json()[0] # extrair o primeiro (e único) dicionário da lista
-            context['profile'] = profile_data
+            profile_data = response.json()[0]
+            context = {
+                'profile': profile_data
+            }
         else:
-            return HttpResponseServerError('Erro ao obter os dados do perfil.')
+            messages.error(request, 'Não foi possível carregar os dados do perfil.')
+            context = {}
 
-        return context
-
-
+        return render(request, self.template_name, context)
 
 
 class DashboardProfileView(TemplateView):

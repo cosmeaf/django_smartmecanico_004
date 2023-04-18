@@ -27,8 +27,8 @@ class Vehicle(Base):
 
     class Meta:
         """Meta definition for Vehicle."""
-        verbose_name = 'Vehicle'
-        verbose_name_plural = 'Vehicles'
+        verbose_name = 'Veículo'
+        verbose_name_plural = 'Veículos'
 
     def __str__(self):
         """Unicode representation of Vehicle."""

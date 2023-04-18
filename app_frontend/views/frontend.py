@@ -1,8 +1,16 @@
-from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from app_frontend.api_client.api_config import ApiConfig
-from django.contrib.auth import logout
+from django.views.generic import TemplateView
+from django.contrib import messages
+from app_frontend.api_client.api_config import APIClient
+from django.conf import settings
+
+import logging
+logger = logging.getLogger(__name__)
+
+API_URL = settings.API_BASE_URL
+SECRET_KEY = settings.SECRET_KEY
+
+logger.info(f'VIEW LOGIN {API_URL} {SECRET_KEY}')
 
 class LoginView(TemplateView):
     template_name = 'login.html'
@@ -10,12 +18,18 @@ class LoginView(TemplateView):
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
+
+        api_client = APIClient()
+        response = api_client.post(API_URL + '/token/', json={'username': username, 'password': password})
+
+        if response.status_code == 200:
+            token = response.json().get('access')
+            request.session['token'] = token
             return redirect('dashboard')
         else:
-            return redirect('login')
+            messages.error(request, 'Não foi possível efetuar login. Verifique suas credenciais.')
+
+        return render(request, self.template_name)
 
 
 class RegisterView(TemplateView):
@@ -24,10 +38,19 @@ class RegisterView(TemplateView):
 class RecoveryView(TemplateView):
     template_name = "recovery.html"
 
+from django.shortcuts import redirect
+
 def logout_view(request):
-    if 'access_token' in request.session:
-        del request.session['access_token']
-    return redirect('login')
+    # Limpar os cookies
+    response = redirect('login')
+    response.delete_cookie('sessionid')
+    response.delete_cookie('csrftoken')
+    response.delete_cookie('access_token')
+    # Limpar a sessão
+    request.session.flush() 
+    return response
+
+
 
 # Home Page
 class HomeView(TemplateView):

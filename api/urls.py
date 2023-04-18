@@ -17,6 +17,7 @@ from app_vehicles.views import VehicleModelViewSet
 from app_services.views import ServiceModelViewSet, HourServiceModelViewSet
 from app_schedule.views import ScheduleViewSet
 from app_history.views import ScheduledServiceViewSet
+from app_budget.views import ExpenseModelViewSet
 
 # ROUTERs
 #router = routers.SimpleRouter(trailing_slash=False)
@@ -28,6 +29,7 @@ router.register(r'services', ServiceModelViewSet)
 router.register(r'hour-service', HourServiceModelViewSet)
 router.register(r'schedule', ScheduleViewSet, basename='schedule')
 router.register(r'scheduled-services', ScheduledServiceViewSet)
+router.register(r'expenses', ExpenseModelViewSet, basename='expenses')
 
 
 urlpatterns = [

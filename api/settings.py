@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'app_employees',
     'app_history',
     'app_frontend',
+    'app_budget',
 ]
 
 
@@ -248,8 +249,5 @@ REST_FRAMEWORK = {
 }
 
 # Obtenha o endereço IP do sistema automaticamente.
-API_VERSION = os.getenv('API_VERSION')
-API_TOKEN = os.getenv('API_TOKEN')
 API_BASE_URL = os.getenv('API_BASE_URL', f'http://{socket.gethostbyname(hostname)}/')
-
 
