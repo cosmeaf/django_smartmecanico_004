@@ -2,15 +2,16 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from app_frontend.api_client.api_config import APIClient
+from app_frontend.api_client.utils import get_api_url
 from django.conf import settings
 
 import logging
+
 logger = logging.getLogger(__name__)
 
-API_URL = settings.API_BASE_URL
+API_URL = get_api_url()
 SECRET_KEY = settings.SECRET_KEY
 
-logger.info(f'VIEW LOGIN {API_URL} {SECRET_KEY}')
 
 class LoginView(TemplateView):
     template_name = 'login.html'
@@ -49,7 +50,6 @@ def logout_view(request):
     # Limpar a sessão
     request.session.flush() 
     return response
-
 
 
 # Home Page

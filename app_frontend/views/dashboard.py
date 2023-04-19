@@ -2,17 +2,15 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib import messages
 from app_frontend.api_client.api_config import APIClient
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+from app_frontend.api_client.utils import get_api_url
 from django.conf import settings
+
 import logging
 
 logger = logging.getLogger(__name__)
 
-API_URL = settings.API_BASE_URL
-LOGIN_URL = settings.LOGIN_URL
+API_URL = get_api_url()
 SECRET_KEY = settings.SECRET_KEY
-
 
 class DashboardView(TemplateView):
     template_name = 'dashboard/index.html'
@@ -39,6 +37,7 @@ class DashboardView(TemplateView):
             context = {}
 
         return render(request, self.template_name, context)
+
 
 
 class DashboardProfileView(TemplateView):

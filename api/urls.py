@@ -39,7 +39,7 @@ urlpatterns = [
     path('api/v1/', include('app_auth.urls')),
     path('api/v1/', include(router.urls)),
     # FrontEnd Web
-    path('api/v1/', include('app_frontend.urls')),
+    path('', include('app_frontend.urls')),
 ]
 
 if settings.DEBUG:

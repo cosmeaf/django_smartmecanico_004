@@ -249,5 +249,5 @@ REST_FRAMEWORK = {
 }
 
 # Obtenha o endereço IP do sistema automaticamente.
-API_BASE_URL = os.getenv('API_BASE_URL', f'http://{socket.gethostbyname(hostname)}/')
+API_BASE_URL = os.getenv('API_BASE_URL')
 

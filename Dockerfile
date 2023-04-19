@@ -32,7 +32,9 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 # copy project
 COPY . /app
 COPY .env /app/
+RUN python manage.py collectstatic --no-input
 
-EXPOSE 8000
+EXPOSE 8002
 
-CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:8000",  "--log-level", "debug"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8002"]
+#CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:8002",  "--log-level", "debug"]
