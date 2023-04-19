@@ -1,14 +1,13 @@
-import socket
+import netifaces
 from urllib.parse import urlparse
-
 from django.conf import settings
 
 def get_api_url():
-    # Obtém o nome do host
-    hostname = socket.gethostname()
+    # Obtém a interface de rede do contêiner
+    iface = netifaces.gateways()['default'][netifaces.AF_INET][1]
 
-    # Obtém o endereço IP do host
-    ip_address = socket.gethostbyname(hostname)
+    # Obtém o endereço IP da interface de rede
+    ip_address = netifaces.ifaddresses(iface)[netifaces.AF_INET][0]['addr']
 
     # Obtém a URL base da API a partir das configurações
     API_BASE_URL = settings.API_BASE_URL
