@@ -1,42 +1,32 @@
-from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from django.contrib import messages
-from app_frontend.api_client.api_config import APIClient
-from app_frontend.api_client.utils import get_api_url
-from django.conf import settings
-
+from django.shortcuts import render
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.exceptions import InvalidToken
+import requests
 import logging
 
 logger = logging.getLogger(__name__)
 
-API_URL = get_api_url()
-SECRET_KEY = settings.SECRET_KEY
-
 class DashboardView(TemplateView):
     template_name = 'dashboard/index.html'
 
-    def get(self, request, *args, **kwargs):
-        token = request.session.get('token')
-        if not token:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.session.get('access_token'):
             return redirect('login')
 
-        api_client = APIClient(token)
-        is_valid = api_client.validate_token(SECRET_KEY)
-        if not is_valid:
-            messages.error(request, 'Token inválido ou expirado.')
-            return redirect('login')
+        token = request.session['access_token']
 
-        response = api_client.get(API_URL + '/profile/')
+        # Fazer request para a API Django Rest Framework para obter os dados do perfil
+        headers = {'Authorization': f'Bearer {token}'}
+        response = requests.get('http://10.0.0.10/api/v1/profile/', headers=headers)
+
         if response.status_code == 200:
             profile_data = response.json()[0]
-            context = {
-                'profile': profile_data
-            }
+            logger.info(profile_data)
+            return render(request, self.template_name, {'profile': profile_data})
         else:
-            messages.error(request, 'Não foi possível carregar os dados do perfil.')
-            context = {}
-
-        return render(request, self.template_name, context)
+            # Exibir mensagem de erro na página de dashboard caso ocorra um erro na API
+            return render(request, self.template_name, {'error': 'Error retrieving profile data'})
 
 
 

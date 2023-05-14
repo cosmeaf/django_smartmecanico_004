@@ -36,3 +36,13 @@ class Employee(Base):
 
     def __str__(self):
         return self.user.username
+
+
+class EmployeeRating(Base):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    rating = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(1, 6)])
+    comment = models.TextField(blank=True, null=True)
+
+    class Meta:
+        unique_together = ('user', 'employee')

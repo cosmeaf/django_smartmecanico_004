@@ -17,4 +17,3 @@ class EmployeeAdmin(admin.ModelAdmin):
 
     foto.short_description = 'Foto'
 
-admin.site.register(Employee, EmployeeAdmin)

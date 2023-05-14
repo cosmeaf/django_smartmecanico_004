@@ -1,36 +1,36 @@
-from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from django.contrib import messages
-from app_frontend.api_client.api_config import APIClient
-from app_frontend.api_client.utils import get_api_url
+from django.shortcuts import render, redirect
 from django.conf import settings
-
+from rest_framework_simplejwt.views import TokenObtainPairView
+import json
+import requests
 import logging
 
 logger = logging.getLogger(__name__)
 
-API_URL = get_api_url()
-SECRET_KEY = settings.SECRET_KEY
-
-
 class LoginView(TemplateView):
     template_name = 'login.html'
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
+        # Obter as credenciais do usuário a partir do formulário de login
         username = request.POST.get('username')
         password = request.POST.get('password')
-
-        api_client = APIClient()
-        response = api_client.post(API_URL + '/token/', json={'username': username, 'password': password})
+        # Fazer request para a API Django Rest Framework para obter o token JWT
+        data = {'username': username, 'password': password}
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post('http://10.0.0.10/api/v1/token/', data=json.dumps(data), headers=headers)
 
         if response.status_code == 200:
             token = response.json().get('access')
-            request.session['token'] = token
+
+            # Armazenar o token JWT no localStorage
+            request.session['access_token'] = token
+
+            # Redirecionar o usuário para a página de dashboard
             return redirect('dashboard')
         else:
-            messages.error(request, 'Não foi possível efetuar login. Verifique suas credenciais.')
-
-        return render(request, self.template_name)
+            # Exibir mensagem de erro na página de login caso as credenciais sejam inválidas
+            return render(request, self.template_name, {'error': 'Invalid credentials'})
 
 
 class RegisterView(TemplateView):
@@ -38,8 +38,6 @@ class RegisterView(TemplateView):
 
 class RecoveryView(TemplateView):
     template_name = "recovery.html"
-
-from django.shortcuts import redirect
 
 def logout_view(request):
     # Limpar os cookies
@@ -50,6 +48,7 @@ def logout_view(request):
     # Limpar a sessão
     request.session.flush() 
     return response
+
 
 
 # Home Page

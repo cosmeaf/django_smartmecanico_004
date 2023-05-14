@@ -22,6 +22,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             'data_admissao': instance.data_admissao.strftime('%d/%m/%Y'),
         }
 
+
 class EmployeeDetailSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     address = serializers.StringRelatedField()
@@ -30,3 +31,5 @@ class EmployeeDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ['id', 'user', 'address', 'profile', 'cargo', 'salario', 'data_admissao']
+
+
