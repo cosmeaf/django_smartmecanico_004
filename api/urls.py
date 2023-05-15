@@ -41,8 +41,6 @@ urlpatterns = [
     path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/', include('app_auth.urls')),
     path('api/v1/', include(router.urls)),
-    # FrontEnd Web
-    path('', include('app_frontend.urls')),
 ]
 
 if settings.DEBUG:

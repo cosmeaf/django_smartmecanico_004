@@ -35,16 +35,6 @@ if ip_address not in allowed_hosts:
 ALLOWED_HOSTS = allowed_hosts
 
 
-# CORS_REPLACE_HTTPS_REFERER      = True
-# HOST_SCHEME                     = "https://"
-# SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT             = True
-# SESSION_COOKIE_SECURE           = True
-# CSRF_COOKIE_SECURE              = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
-# SECURE_HSTS_SECONDS             = 31536000
-# SECURE_FRAME_DENY               = True
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -67,7 +57,6 @@ INSTALLED_APPS = [
     'app_schedule',
     'app_employees',
     'app_history',
-    'app_frontend',
     'app_budget',
 ]
 
@@ -110,12 +99,24 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST') if os.environ.get('DB_HOST') else 'dockersky.com',
+        'PORT': os.environ.get('DB_PORT') if os.environ.get('DB_PORT') else '33060',
     }
 }
+
 
 
 # Password validation
