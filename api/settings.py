@@ -112,8 +112,8 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST') if os.environ.get('DB_HOST') else 'dockersky.com',
-        'PORT': os.environ.get('DB_PORT') if os.environ.get('DB_PORT') else '33060',
+        'HOST': os.environ.get('DB_HOST') if os.environ.get('DB_HOST') else '172.16.0.10',
+        'PORT': os.environ.get('DB_PORT') if os.environ.get('DB_PORT') else '3306',
     }
 }
 
