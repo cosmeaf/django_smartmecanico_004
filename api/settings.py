@@ -18,9 +18,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*', '173.224.117.181', 'dockersky.com']
 # Obtém o endereço IP do sistema
 hostname = socket.gethostname()
 ip_address = socket.gethostbyname(hostname)
@@ -152,6 +152,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 if DEBUG:
     STATIC_URL = '/static/'
@@ -165,6 +166,10 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = '/usr/src/app/media'
     
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
