@@ -37,7 +37,7 @@ router.register(r'employees', EmployeeViewSet, basename='employees')
 
 
 urlpatterns = [
-    path('ping/', ping, name='ping'),
+    path('api/v1/ping/', ping, name='ping'),
     path('admin/', admin.site.urls),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
