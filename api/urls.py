@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from .views import ping
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
@@ -36,12 +37,16 @@ router.register(r'employees', EmployeeViewSet, basename='employees')
 
 
 urlpatterns = [
+    path('ping/', ping, name='ping'),
     path('admin/', admin.site.urls),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/v1/', include('app_auth.urls')),
     path('api/v1/', include(router.urls)),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

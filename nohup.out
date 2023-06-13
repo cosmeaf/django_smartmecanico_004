@@ -1,0 +1,277 @@
+[2023-05-30 07:35:06 -0500] [137413] [DEBUG] Current configuration:
+  config: ./gunicorn.conf.py
+  wsgi_app: None
+  bind: ['0.0.0.0:8000']
+  backlog: 2048
+  workers: 2
+  worker_class: sync
+  threads: 1
+  worker_connections: 1000
+  max_requests: 0
+  max_requests_jitter: 0
+  timeout: 30
+  graceful_timeout: 30
+  keepalive: 2
+  limit_request_line: 4094
+  limit_request_fields: 100
+  limit_request_field_size: 8190
+  reload: False
+  reload_engine: auto
+  reload_extra_files: []
+  spew: False
+  check_config: False
+  print_config: False
+  preload_app: False
+  sendfile: None
+  reuse_port: False
+  chdir: /root/docker/deploy/django_smartmecanico_004
+  daemon: False
+  raw_env: []
+  pidfile: None
+  worker_tmp_dir: None
+  user: 0
+  group: 0
+  umask: 0
+  initgroups: False
+  tmp_upload_dir: None
+  secure_scheme_headers: {'X-FORWARDED-PROTOCOL': 'ssl', 'X-FORWARDED-PROTO': 'https', 'X-FORWARDED-SSL': 'on'}
+  forwarded_allow_ips: ['127.0.0.1']
+  accesslog: None
+  disable_redirect_access_to_syslog: False
+  access_log_format: %(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
+  errorlog: -
+  loglevel: debug
+  capture_output: False
+  logger_class: gunicorn.glogging.Logger
+  logconfig: None
+  logconfig_dict: {}
+  syslog_addr: udp://localhost:514
+  syslog: False
+  syslog_prefix: None
+  syslog_facility: user
+  enable_stdio_inheritance: False
+  statsd_host: None
+  dogstatsd_tags: 
+  statsd_prefix: 
+  proc_name: None
+  default_proc_name: api.wsgi
+  pythonpath: None
+  paste: None
+  on_starting: <function OnStarting.on_starting at 0x7f1b4408b940>
+  on_reload: <function OnReload.on_reload at 0x7f1b4408ba60>
+  when_ready: <function WhenReady.when_ready at 0x7f1b4408bb80>
+  pre_fork: <function Prefork.pre_fork at 0x7f1b4408bca0>
+  post_fork: <function Postfork.post_fork at 0x7f1b4408bdc0>
+  post_worker_init: <function PostWorkerInit.post_worker_init at 0x7f1b4408bee0>
+  worker_int: <function WorkerInt.worker_int at 0x7f1b4409f040>
+  worker_abort: <function WorkerAbort.worker_abort at 0x7f1b4409f160>
+  pre_exec: <function PreExec.pre_exec at 0x7f1b4409f280>
+  pre_request: <function PreRequest.pre_request at 0x7f1b4409f3a0>
+  post_request: <function PostRequest.post_request at 0x7f1b4409f430>
+  child_exit: <function ChildExit.child_exit at 0x7f1b4409f550>
+  worker_exit: <function WorkerExit.worker_exit at 0x7f1b4409f670>
+  nworkers_changed: <function NumWorkersChanged.nworkers_changed at 0x7f1b4409f790>
+  on_exit: <function OnExit.on_exit at 0x7f1b4409f8b0>
+  proxy_protocol: False
+  proxy_allow_ips: ['127.0.0.1']
+  keyfile: privkey.pem
+  certfile: fullchain.pem
+  ssl_version: 2
+  cert_reqs: 0
+  ca_certs: None
+  suppress_ragged_eofs: True
+  do_handshake_on_connect: False
+  ciphers: None
+  raw_paste_global_conf: []
+  strip_header_spaces: False
+[2023-05-30 07:35:06 -0500] [137413] [INFO] Starting gunicorn 20.1.0
+[2023-05-30 07:35:06 -0500] [137413] [DEBUG] Arbiter booted
+[2023-05-30 07:35:06 -0500] [137413] [INFO] Listening at: https://0.0.0.0:8000 (137413)
+[2023-05-30 07:35:06 -0500] [137413] [INFO] Using worker: sync
+[2023-05-30 07:35:06 -0500] [137415] [INFO] Booting worker with pid: 137415
+[2023-05-30 07:35:06 -0500] [137416] [INFO] Booting worker with pid: 137416
+[2023-05-30 07:35:06 -0500] [137413] [DEBUG] 2 workers
+Signal registered
+Signal registered
+[2023-05-30 09:50:45 -0300] [137415] [DEBUG] Error processing SSL request.
+[2023-05-30 09:50:45 -0300] [137415] [DEBUG] Invalid request from ip=94.102.61.48: [SSL: HTTP_REQUEST] http request (_ssl.c:2635)
+[2023-05-30 09:50:45 -0300] [137415] [DEBUG] Failed to send error message.
+[2023-05-30 10:01:02 -0300] [137415] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:01:02 -0300] [137416] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:01:03 -0300] [137416] [DEBUG] POST /api/v1/verify/
+Unauthorized: /api/v1/verify/
+Unauthorized: /api/v1/verify/
+[2023-05-30 10:01:03 -0300] [137415] [DEBUG] POST /api/v1/verify/
+Unauthorized: /api/v1/verify/
+Unauthorized: /api/v1/verify/
+[2023-05-30 10:01:28 -0300] [137415] [DEBUG] OPTIONS /api/v1/token/
+[2023-05-30 10:01:28 -0300] [137415] [DEBUG] POST /api/v1/token/
+[2023-05-30 10:04:19 -0300] [137415] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:04:19 -0300] [137416] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:04:19 -0300] [137415] [DEBUG] POST /api/v1/verify/
+[2023-05-30 10:04:19 -0300] [137416] [DEBUG] POST /api/v1/verify/
+[2023-05-30 10:05:00 -0300] [137416] [DEBUG] Error processing SSL request.
+[2023-05-30 10:05:00 -0300] [137416] [DEBUG] Invalid request from ip=179.43.177.244: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:2635)
+[2023-05-30 10:05:00 -0300] [137416] [DEBUG] Failed to send error message.
+[2023-05-30 10:13:39 -0300] [137415] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:13:39 -0300] [137416] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:13:39 -0300] [137416] [DEBUG] POST /api/v1/verify/
+[2023-05-30 10:13:39 -0300] [137415] [DEBUG] POST /api/v1/verify/
+[2023-05-30 10:20:08 -0300] [137415] [DEBUG] Ignoring connection reset
+[2023-05-30 10:20:09 -0300] [137415] [DEBUG] Error processing SSL request.
+[2023-05-30 10:20:09 -0300] [137415] [DEBUG] Invalid request from ip=167.248.133.49: [SSL: HTTP_REQUEST] http request (_ssl.c:2635)
+[2023-05-30 10:20:09 -0300] [137415] [DEBUG] Failed to send error message.
+[2023-05-30 10:20:09 -0300] [137415] [DEBUG] Ignoring connection reset
+[2023-05-30 10:20:10 -0300] [137415] [DEBUG] GET /
+Not Found: /
+Not Found: /
+[2023-05-30 10:20:11 -0300] [137415] [DEBUG] GET /
+Not Found: /
+Not Found: /
+[2023-05-30 10:20:11 -0300] [137416] [DEBUG] PRI *
+Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
+Bad Request: /*
+Bad Request: /*
+[2023-05-30 10:21:22 -0300] [137416] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:21:22 -0300] [137415] [DEBUG] OPTIONS /api/v1/verify/
+[2023-05-30 10:21:23 -0300] [137416] [DEBUG] POST /api/v1/verify/
+[2023-05-30 10:21:23 -0300] [137415] [DEBUG] POST /api/v1/verify/
+[2023-05-30 10:26:45 -0300] [137416] [DEBUG] GET /admin/auth/user/
+Internal Server Error: /admin/auth/user/
+Traceback (most recent call last):
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 204, in _get_response
+    response = response.render()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/response.py", line 83, in rendered_content
+    return template.render(context, self._request)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/utils/functional.py", line 246, in inner
+    self._setup()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 438, in _setup
+    self._wrapped = get_storage_class(settings.STATICFILES_STORAGE)()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/whitenoise/storage.py", line 79, in __init__
+    super().__init__(*args, **kwargs)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 373, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 383, in load_manifest
+    content = self.read_manifest()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 377, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/files/storage.py", line 38, in open
+    return self._open(name, mode)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/files/storage.py", line 243, in _open
+    return File(open(self.path(name), mode))
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 38, in path
+    raise ImproperlyConfigured("You're using the staticfiles app "
+django.core.exceptions.ImproperlyConfigured: You're using the staticfiles app without having set the STATIC_ROOT setting to a filesystem path.
+Internal Server Error: /admin/auth/user/
+Traceback (most recent call last):
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 204, in _get_response
+    response = response.render()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/response.py", line 83, in rendered_content
+    return template.render(context, self._request)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/templatetags/static.py", line 106, in render
+    url = self.url(context)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/templatetags/static.py", line 103, in url
+    return self.handle_simple(path)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/templatetags/static.py", line 118, in handle_simple
+    return staticfiles_storage.url(path)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/utils/functional.py", line 246, in inner
+    self._setup()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 438, in _setup
+    self._wrapped = get_storage_class(settings.STATICFILES_STORAGE)()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/whitenoise/storage.py", line 79, in __init__
+    super().__init__(*args, **kwargs)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 373, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 383, in load_manifest
+    content = self.read_manifest()
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 377, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/files/storage.py", line 38, in open
+    return self._open(name, mode)
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/core/files/storage.py", line 243, in _open
+    return File(open(self.path(name), mode))
+  File "/root/docker/deploy/django_smartmecanico_004/venv/lib/python3.8/site-packages/django/contrib/staticfiles/storage.py", line 38, in path
+    raise ImproperlyConfigured("You're using the staticfiles app "
+django.core.exceptions.ImproperlyConfigured: You're using the staticfiles app without having set the STATIC_ROOT setting to a filesystem path.
+[2023-05-30 10:26:46 -0300] [137415] [DEBUG] GET /favicon.ico
+Not Found: /favicon.ico
+Not Found: /favicon.ico

@@ -18,7 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+#DEBUG = False
 
 # ALLOWED_HOSTS = ['*', '173.224.117.181', 'dockersky.com']
 # Obtém o endereço IP do sistema
@@ -33,6 +34,16 @@ if ip_address not in allowed_hosts:
     allowed_hosts.append(ip_address)
 
 ALLOWED_HOSTS = allowed_hosts
+
+CORS_REPLACE_HTTPS_REFERER = True
+HOST_SCHEME = "https://"
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_FRAME_DENY = True
 
 
 # Application definition
@@ -152,21 +163,22 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 if DEBUG:
     STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATICFILES_DIRS=[
+         os.path.join(BASE_DIR, 'staticfiles')
+    ]
+else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-else:
-    STATIC_URL = '/static/'
-    STATIC_ROOT = '/usr/src/app/staticfiles'
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = '/usr/src/app/media'
-    
+
+
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',

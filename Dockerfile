@@ -1,12 +1,18 @@
+# set image name
+ARG image_name
+
 # pull the official base image
-FROM python:3
+FROM python:3.9
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Image Name
+LABEL image_name=${image_name}
+
 # set work directory
-WORKDIR /app
+WORKDIR /usr/src/app/
 
 RUN apt update
 RUN apt install -y cron && touch /var/log/cron.log
@@ -19,16 +25,16 @@ ENV TZ="America/Sao_Paulo"
 # install dependencies
 RUN pip install --upgrade pip
 
-COPY ./requirements.txt /app
+COPY ./requirements.txt /usr/src/app/
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
 
 # copy project
-COPY . /app
-COPY .env /app/
+COPY . /usr/src/app/
+COPY .env /usr/src/app/
 RUN python manage.py collectstatic --no-input
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-#CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:8002",  "--log-level", "debug"]
+CMD ["gunicorn", "--workers", "2", "api.wsgi", "-b", "0.0.0.0:8000", "--certfile", "fullchain.pem", "--keyfile", "privkey.pem", "--log-level", "debug"]
+
